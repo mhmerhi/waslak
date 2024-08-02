@@ -70,6 +70,17 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item {{ request()->routeIs('monthly-rides.index', 'monthly-rides.create', 'monthly-rides.show', 'monthly-rides.edit', 'monthly-rides.unpaid') ? 'active' : '' }}">
+                <a href="#monthlyRideSubmenu" id="toggle-monthly-rides" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-archive"></i>Monthly Rides</a>
+                <ul class="collapse list-unstyled{{ request()->routeIs('monthly-rides.index', 'monthly-rides.create', 'monthly-rides.show', 'monthly-rides.edit', 'monthly-rides.unpaid') ? ' show' : '' }}" id="monthlyRideSubmenu">
+                    <li>
+                        <a class="nav-link{{ request()->routeIs('monthly-rides.index') ? ' active' : '' }}" href="{{ route('monthly-rides.index') }}"><i class="fa fa-archive"></i> All</a>
+                    </li>
+                    <li>
+                        <a class="nav-link{{ request()->routeIs('monthly-rides.unpaid') ? ' active' : '' }}" href="{{ route('monthly-rides.unpaid') }}"><i class="fa fa-archive"></i> Unpaid</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </nav>
 
@@ -139,6 +150,11 @@
         $('#toggle-orders').click(function(e) {
             e.preventDefault();
             $('#orderSubmenu').collapse('toggle');
+        });
+
+        $('#toggle-monthly-rides').click(function(e) {
+            e.preventDefault();
+            $('#monthlyRideSubmenu').collapse('toggle');
         });
 
         $('#sidebarCollapse').on('click', function () {

@@ -14,25 +14,23 @@
             <th>From</th>
             <th>To</th>
             <th>Cost</th>
-            <th>Waslak</th>
             <th>Date</th>
             <th style='width: 100px'>Actions</th>
         </tr>
         </thead>
         <tbody>
-        @foreach ($orders as $order)
+        @foreach ($monthlyRides as $monthlyRide)
             <tr>
-                <td>{{ $order->client->name }}</td>
-                <td>{{ $order->driver->name }}</td>
-                <td>{{ $order->from }}</td>
-                <td>{{ $order->to }}</td>
-                <td>{{ number_format($order->cost) }}</td>
-                <td>{{ number_format($order->profit) }}</td>
-                <td>{{ $order->created_at->format('d/m/Y h:i A') }}</td>
+                <td>{{ $monthlyRide->client->name }}</td>
+                <td>{{ $monthlyRide->driver->name }}</td>
+                <td>{{ $monthlyRide->from }}</td>
+                <td>{{ $monthlyRide->to }}</td>
+                <td>{{ number_format($monthlyRide->cost) }}</td>
+                <td>{{ $monthlyRide->created_at->format('d/m/Y h:i A') }}</td>
                 <td>
-                    <a href='{{ route('orders.show', $order->id) }}' class='btn btn-success btn-sm'><i class='fa fa-eye'></i></a>
+                    <a href='{{ route('monthly-rides.show', $monthlyRide->id) }}' class='btn btn-success btn-sm'><i class='fa fa-eye'></i></a>
 
-                    <form action="{{ route('orders.approve', ['id' => $order->id]) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('monthly-rides.approve', ['id' => $monthlyRide->id]) }}" method="POST" style="display:inline;">
                         @csrf
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to approve the order?');"><i class="fa fa-thumbs-up"></i></button>
                     </form>
@@ -42,9 +40,9 @@
         </tbody>
         <tfoot>
         <tr>
-            <th colspan="5">Total Waslak</th>
+            <th colspan="3">Total Waslak</th>
             <th id="totalCost"></th>
-            <th colspan="2"></th>
+            <th colspan="3"></th>
         </tr>
         </tfoot>
     </table>

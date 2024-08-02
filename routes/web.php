@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MonthlyRideController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -24,4 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('/clients', ClientController::class);
     Route::resource('/orders', OrderController::class);
     Route::get('/unpaid-orders', [OrderController::class, 'unpaid'])->name('orders.unpaid');
+    Route::post('/orders/{id}/approve', [OrderController::class, 'approve'])->name('orders.approve');
+
+
+    Route::resource('/monthly-rides', MonthlyRideController::class);
+    Route::get('/unpaid-monthly-rides', [MonthlyRideController::class, 'unpaid'])->name('monthly-rides.unpaid');
+    Route::post('/monthly-rides/{id}/approve', [MonthlyRideController::class, 'approve'])->name('monthly-rides.approve');
 });

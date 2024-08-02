@@ -31,7 +31,9 @@
                 <td><?= $order->driver_paid ? '<i class="fa fa-thumbs-o-up color-blue"></i>' : '<i class="fa fa-thumbs-o-down color-red"></i>'?></td>
                 <td>
                     <a href='{{ route('orders.show', $order->id) }}' class='btn btn-success btn-sm'><i class='fa fa-eye'></i></a>
-                    <a href='{{ route('orders.edit', $order->id) }}' class='btn btn-warning btn-sm'><i class='fa fa-pencil'></i></a>
+                    @if(!$order->driver_paid)
+                        <a href='{{ route('orders.edit', $order->id) }}' class='btn btn-warning btn-sm'><i class='fa fa-pencil'></i></a>
+                    @endif
                 </td>
             </tr>
         @endforeach

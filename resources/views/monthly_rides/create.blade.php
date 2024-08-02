@@ -7,7 +7,7 @@
             <h3 class="card-title">Add New Order</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('orders.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('monthly-rides.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="row mb-2">
@@ -53,7 +53,7 @@
                 <div class="row mb-2">
                     <div class="form-group col-md-6">
                         <label for="from">From</label>
-                        <input type="text" id="from" name="from" class="form-control" value="{{ old('from') }}" required>
+                        <input type="text" id="from" name="from" class="form-control" value="{{ old('from') }}">
                         @error('from')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -61,7 +61,7 @@
 
                     <div class="form-group col-md-6">
                         <label for="to">To</label>
-                        <input type="text" id="to" name="to" class="form-control" value="{{ old('to') }}" required>
+                        <input type="text" id="to" name="to" class="form-control" value="{{ old('to') }}">
                         @error('to')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -76,20 +76,12 @@
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="profit">Profit</label>
-                        <input type="text" id="profit" name="profit" class="form-control" value="{{ old('profit') }}">
-                        @error('profit')
-                        <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="driver_paid">Driver Paid</label>
-                        <input type="checkbox" id="driver_paid" name="driver_paid" class="form-check-input" {{ old('driver_paid') ? 'checked' : '' }}>
+                        <label for="client_paid">Client Paid</label>
+                        <input type="checkbox" id="client_paid" name="client_paid" class="form-check-input" {{ old('client_paid') ? 'checked' : '' }}>
                     </div>
                 </div>
 

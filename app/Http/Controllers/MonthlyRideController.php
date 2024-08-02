@@ -4,24 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Driver;
-use App\Models\Order;
+use App\Models\MonthlyRide;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class OrderController extends Controller
+class MonthlyRideController extends Controller
 {
     public function unpaid()
     {
-        $orders = Order::query()->where('driver_paid', '=', 0)->orderBy('created_at', 'desc')->get();
+        $monthlyRides = MonthlyRide::query()->where('client_paid', '=', 0)->orderBy('created_at', 'desc')->get();
 
-        return view('orders.unpaid', compact('orders'));
+        return view('monthly_rides.unpaid', compact('monthlyRides'));
     }
 
     public function index()
     {
-        $orders = Order::query()->orderBy('created_at', 'desc')->get();
+        $monthlyRides = MonthlyRide::query()->orderBy('created_at', 'desc')->get();
 
-        return view('orders.index', compact('orders'));
+        return view('monthly_rides.index', compact('monthlyRides'));
     }
 
     public function create()
@@ -29,7 +29,7 @@ class OrderController extends Controller
         $clients = Client::all();
         $drivers = Driver::all();
 
-        return view('orders.create', compact('clients', 'drivers'));
+        return view('monthly_rides.create', compact('clients', 'drivers'));
     }
 
     public function store(Request $request)
@@ -38,13 +38,12 @@ class OrderController extends Controller
             'client_id' => 'required|exists:clients,id',
             'driver_id' => 'required|exists:drivers,id',
             'type' => 'required|string|max:255',
-            'from' => 'required|string|max:255',
-            'to' => 'required|string|max:255',
+            'from' => 'nullable|string|max:255',
+            'to' => 'nullable|string|max:255',
             'cost' => 'required|numeric',
-            'profit' => 'nullable|numeric',
         ]);
 
-        Order::create([
+        MonthlyRide::create([
             'user_id' => Auth::user()->id,
             'client_id' => $validatedData['client_id'],
             'driver_id' => $validatedData['driver_id'],
@@ -52,29 +51,26 @@ class OrderController extends Controller
             'from' => $validatedData['from'],
             'to' => $validatedData['to'],
             'cost' => $validatedData['cost'],
-            'profit' => $validatedData['profit'] ?? ($validatedData['cost'] / 5),
             'client_paid' => $request->has('client_paid'),
-            'driver_paid' => $request->has('driver_paid'),
-            'driver_paid_by_account' => $request->has('driver_paid_by_account'),
         ]);
 
-        return redirect()->route('orders.index')->with('success', 'Order added successfully!');
+        return redirect()->route('monthly-rides.index')->with('success', 'Monthly Ride added successfully!');
     }
 
     public function edit(int $id)
     {
-        $order = Order::findOrFail($id);
+        $monthlyRide = MonthlyRide::findOrFail($id);
         $clients = Client::all();
         $drivers = Driver::all();
 
-        return view('orders.edit', compact('order', 'clients', 'drivers'));
+        return view('monthly_rides.edit', compact('monthlyRide', 'clients', 'drivers'));
     }
 
     public function show(int $id)
     {
-        $order = Order::find($id);
+        $monthlyRide = MonthlyRide::find($id);
 
-        return view('orders.show', compact('order'));
+        return view('monthly_rides.show', compact('monthlyRide'));
     }
 
     public function update(Request $request, $id)
@@ -83,35 +79,33 @@ class OrderController extends Controller
             'client_id' => 'required|exists:clients,id',
             'driver_id' => 'required|exists:drivers,id',
             'type' => 'required|string|max:255',
-            'from' => 'required|string|max:255',
-            'to' => 'required|string|max:255',
+            'from' => 'nullable|string|max:255',
+            'to' => 'nullable|string|max:255',
             'cost' => 'required|numeric',
-            'profit' => 'nullable|numeric',
         ]);
 
-        $order = Order::findOrFail($id);
+        $monthlyRide = MonthlyRide::findOrFail($id);
 
-        $order->update([
+        $monthlyRide->update([
             'client_id' => $validatedData['client_id'],
             'driver_id' => $validatedData['driver_id'],
             'type' => $validatedData['type'],
             'from' => $validatedData['from'],
             'to' => $validatedData['to'],
             'cost' => $validatedData['cost'],
-            'profit' => $validatedData['profit'] ?? ($validatedData['cost'] / 5),
         ]);
 
-        return redirect()->route('orders.index')->with('success', 'Order updated successfully!');
+        return redirect()->route('monthly-rides.index')->with('success', 'Monthly Ride updated successfully!');
     }
 
     public function approve(int $id)
     {
-        $order = Order::find($id);
+        $monthlyRide = MonthlyRide::find($id);
 
-        $order->driver_paid = true;
+        $monthlyRide->client_paid = true;
 
-        $order->save();
+        $monthlyRide->save();
 
-        return redirect()->route('orders.unpaid')->with('success', 'Order Approved successfully!');
+        return redirect()->route('monthly-rides.unpaid')->with('success', 'Monthly Ride Approved successfully!');
     }
 }
