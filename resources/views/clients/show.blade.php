@@ -9,24 +9,24 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="name">Name: {{ $client->name }}</label>
+                        <label for="name"><b>Name:</b> {{ $client->name }}</label>
                     </div>
 
                     <div class="form-group">
-                        <label for="phone">Phone: {{ $client->phone }}</label>
+                        <label for="phone"><b>Phone:</b> {{ $client->phone }}</label>
                     </div>
 
                     <div class="form-group">
-                        <label for="activated">Activated: <?= $client->has_account ? '<i class="fa fa-thumbs-o-up color-blue"></i>': '<i class="fa fa-thumbs-o-down color-red"></i>' ?></label>
+                        <label for="has_account"><b>Has Whish:</b> <?= $client->has_account ? '<i class="fa fa-thumbs-o-up color-blue"></i>': '<i class="fa fa-thumbs-o-down color-red"></i>' ?></label>
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="Address">Address: {{ $client->address }}</label>
+                        <label for="Address"><b>Address:</b> {{ $client->address }}</label>
                     </div>
                     <div class="form-group">
-                        <label for="description">Description: {{ $client->description }}</label>
+                        <label for="description"><b>Description:</b> {{ $client->description }}</label>
                     </div>
                 </div>
             </div>
